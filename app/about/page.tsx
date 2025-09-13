@@ -1,3 +1,5 @@
+"use client"
+
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -18,74 +20,130 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-
-const stats = [
-  { label: "Years of Experience", value: "15+", icon: Clock },
-  { label: "Products in Portfolio", value: "50+", icon: Leaf },
-  { label: "Happy Farmers", value: "10,000+", icon: Users },
-  { label: "States Covered", value: "25+", icon: MapPin },
-]
-
-const values = [
-  {
-    icon: Shield,
-    title: "Quality Assurance",
-    description: "We maintain the highest standards of quality in all our products, ensuring they meet international standards and farmer expectations."
-  },
-  {
-    icon: Leaf,
-    title: "Sustainability",
-    description: "Our products are designed to promote sustainable farming practices while protecting the environment for future generations."
-  },
-  {
-    icon: Target,
-    title: "Farmer Success",
-    description: "We are committed to the success of farmers, providing them with innovative solutions that maximize their crop yields and profits."
-  },
-  {
-    icon: TrendingUp,
-    title: "Innovation",
-    description: "We continuously invest in research and development to bring cutting-edge agricultural solutions to the market."
-  }
-]
-
-const milestones = [
-  { year: "2008", title: "Company Founded", description: "Started with a vision to revolutionize Indian agriculture" },
-  { year: "2012", title: "First Product Launch", description: "Introduced our flagship fertilizer product" },
-  { year: "2015", title: "Expansion", description: "Expanded operations to 10 states across India" },
-  { year: "2018", title: "Quality Certification", description: "Achieved ISO 9001:2015 certification" },
-  { year: "2021", title: "Digital Transformation", description: "Launched online platform for farmers" },
-  { year: "2024", title: "Market Leader", description: "Became one of the leading agricultural solution providers" }
-]
-
-const team = [
-  {
-    name: "Rajesh Kumar",
-    position: "Founder & CEO",
-    image: "/placeholder-user.jpg",
-    description: "Agricultural expert with 20+ years of experience in the industry."
-  },
-  {
-    name: "Priya Sharma",
-    position: "Head of R&D",
-    image: "/placeholder-user.jpg",
-    description: "Ph.D. in Agricultural Sciences, leading our innovation initiatives."
-  },
-  {
-    name: "Amit Patel",
-    position: "Sales Director",
-    image: "/placeholder-user.jpg",
-    description: "Expert in farmer relations and market development."
-  },
-  {
-    name: "Meena Singh",
-    position: "Quality Manager",
-    image: "/placeholder-user.jpg",
-    description: "Ensuring all products meet the highest quality standards."
-  }
-]
+import { useTranslation } from "@/contexts/translation-context"
 
 export default function AboutPage() {
+  const { t, isLoading } = useTranslation()
+
+  if (isLoading) {
+    return (
+      <main className="min-h-screen">
+        {/* Header skeleton */}
+        <header className="bg-white shadow-lg border-b sticky top-0 z-50">
+          <div className="bg-brand-primary text-white py-2">
+            <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+              <div className="flex items-center gap-4">
+                <div className="animate-pulse bg-white/20 h-4 w-24 rounded"></div>
+                <div className="animate-pulse bg-white/20 h-4 w-32 rounded hidden sm:block"></div>
+                <div className="animate-pulse bg-white/20 h-4 w-28 rounded hidden lg:block"></div>
+              </div>
+              <div className="animate-pulse bg-gray-200 h-8 w-16 rounded"></div>
+            </div>
+          </div>
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-20">
+              <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+              <div className="flex items-center gap-4">
+                <div className="animate-pulse bg-gray-200 h-8 w-8 rounded"></div>
+                <div className="animate-pulse bg-gray-200 h-8 w-8 rounded lg:hidden"></div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero section skeleton */}
+        <section className="bg-gradient-to-r from-brand-primary to-brand-accent text-white py-20">
+          <div className="container mx-auto px-4 text-center">
+            <div className="animate-pulse bg-white/20 h-12 w-96 mx-auto mb-6 rounded lg:h-16"></div>
+            <div className="animate-pulse bg-white/20 h-6 w-full max-w-3xl mx-auto rounded"></div>
+          </div>
+        </section>
+
+        {/* Content skeleton */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="animate-pulse bg-gray-200 h-8 w-48 mb-6 rounded"></div>
+                <div className="space-y-4">
+                  <div className="animate-pulse bg-gray-200 h-4 w-full rounded"></div>
+                  <div className="animate-pulse bg-gray-200 h-4 w-full rounded"></div>
+                  <div className="animate-pulse bg-gray-200 h-4 w-3/4 rounded"></div>
+                </div>
+              </div>
+              <div className="animate-pulse bg-gray-200 aspect-square rounded-2xl"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  const stats = [
+    { label: t('about.yearsExperience'), value: "15+", icon: Clock },
+    { label: t('about.productsPortfolio'), value: "50+", icon: Leaf },
+    { label: t('about.happyFarmers'), value: "10,000+", icon: Users },
+    { label: t('about.statesCovered'), value: "25+", icon: MapPin },
+  ]
+
+  const values = [
+    {
+      icon: Shield,
+      title: t('about.qualityAssurance'),
+      description: t('about.qualityDescription')
+    },
+    {
+      icon: Leaf,
+      title: t('about.sustainability'),
+      description: t('about.sustainabilityDescription')
+    },
+    {
+      icon: Target,
+      title: t('about.farmerSuccess'),
+      description: t('about.farmerSuccessDescription')
+    },
+    {
+      icon: TrendingUp,
+      title: t('about.innovation'),
+      description: t('about.innovationDescription')
+    }
+  ]
+
+  const milestones = [
+    { year: "2008", title: t('about.companyFounded'), description: t('about.companyFoundedDesc') },
+    { year: "2012", title: t('about.firstProductLaunch'), description: t('about.firstProductDesc') },
+    { year: "2015", title: t('about.expansion'), description: t('about.expansionDesc') },
+    { year: "2018", title: t('about.qualityCertification'), description: t('about.qualityCertDesc') },
+    { year: "2021", title: t('about.digitalTransformation'), description: t('about.digitalTransformDesc') },
+    { year: "2024", title: t('about.marketLeader'), description: t('about.marketLeaderDesc') }
+  ]
+
+  const team = [
+    {
+      name: "Rajesh Kumar",
+      position: t('about.founderCEO'),
+      image: "/placeholder-user.jpg",
+      description: t('about.founderDesc')
+    },
+    {
+      name: "Priya Sharma",
+      position: t('about.headR&D'),
+      image: "/placeholder-user.jpg",
+      description: t('about.headR&DDesc')
+    },
+    {
+      name: "Amit Patel",
+      position: t('about.salesDirector'),
+      image: "/placeholder-user.jpg",
+      description: t('about.salesDirectorDesc')
+    },
+    {
+      name: "Meena Singh",
+      position: t('about.qualityManager'),
+      image: "/placeholder-user.jpg",
+      description: t('about.qualityManagerDesc')
+    }
+  ]
   return (
     <main className="min-h-screen">
       <Header />
@@ -93,9 +151,9 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-brand-primary to-brand-accent text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">About Shreyash Agro</h1>
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6">{t('about.title')}</h1>
           <p className="text-xl lg:text-2xl max-w-3xl mx-auto">
-            Leading the agricultural revolution with innovative solutions and sustainable practices
+            {t('about.subtitle')}
           </p>
         </div>
       </section>
@@ -106,20 +164,16 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-6">
-                Our Story
+                {t('about.ourStory')}
               </h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Founded in 2008, Shreyash Agro Industries has been at the forefront of agricultural innovation in India. 
-                What started as a small family business has grown into one of the most trusted names in agricultural solutions.
+                {t('about.storyText1')}
               </p>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Our journey began with a simple mission: to help Indian farmers increase their yields while maintaining 
-                sustainable farming practices. Today, we serve thousands of farmers across 25+ states with our comprehensive 
-                range of fertilizers, pesticides, and growth promoters.
+                {t('about.storyText2')}
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                We believe that the success of our nation lies in the prosperity of our farmers, and we are committed 
-                to providing them with the best agricultural solutions backed by science and innovation.
+                {t('about.storyText3')}
               </p>
             </div>
             <div className="relative">
@@ -163,10 +217,9 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mb-6">
                   <Target className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-brand-primary mb-4">Our Mission</h3>
+                <h3 className="text-2xl font-bold text-brand-primary mb-4">{t('about.ourMission')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  To empower Indian farmers with innovative, sustainable, and effective agricultural solutions that 
-                  maximize crop yields while preserving the environment for future generations.
+                  {t('about.missionText')}
                 </p>
               </CardContent>
             </Card>
@@ -176,10 +229,9 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mb-6">
                   <Award className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-brand-accent mb-4">Our Vision</h3>
+                <h3 className="text-2xl font-bold text-brand-accent mb-4">{t('about.ourVision')}</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  To become the most trusted partner for Indian farmers, leading the agricultural revolution through 
-                  innovation, quality, and sustainable practices.
+                  {t('about.visionText')}
                 </p>
               </CardContent>
             </Card>
@@ -191,9 +243,9 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">Our Values</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">{t('about.ourValues')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              These core values guide everything we do and shape our relationships with farmers, partners, and communities.
+              {t('about.valuesSubtitle')}
             </p>
           </div>
           
@@ -217,9 +269,9 @@ export default function AboutPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">Our Journey</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">{t('about.ourJourney')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              A timeline of our growth and achievements over the years
+              {t('about.journeySubtitle')}
             </p>
           </div>
           
@@ -248,9 +300,9 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">Our Leadership Team</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">{t('about.ourLeadershipTeam')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Meet the passionate individuals who drive our mission forward
+              {t('about.teamSubtitle')}
             </p>
           </div>
           
@@ -280,19 +332,19 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-16 bg-gradient-to-r from-brand-primary to-brand-accent text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-6">Ready to Transform Your Farming?</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold mb-6">{t('about.readyToTransform')}</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of successful farmers who trust Shreyash Agro for their agricultural needs
+            {t('about.joinThousands')}
           </p>
                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
              <Link href="/products">
                <Button className="bg-white text-brand-primary hover:bg-gray-100 px-8 py-3 text-lg">
-                 View Our Products
+                 {t('about.viewProducts')}
                </Button>
              </Link>
              <Link href="/contact">
                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-brand-primary px-8 py-3 text-lg">
-                 Contact Us
+                 {t('about.contactUs')}
                </Button>
              </Link>
            </div>

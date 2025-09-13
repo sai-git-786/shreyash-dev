@@ -5,9 +5,52 @@ import { ShoppingCart, Menu, Phone, Mail, Leaf, Truck, MapPin, Search, X } from 
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
+import { useTranslation } from "@/contexts/translation-context"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { t, changeLanguage, locale, isLoading } = useTranslation()
+  
+  if (isLoading) {
+    return (
+      <header className="bg-white shadow-lg border-b sticky top-0 z-50">
+        {/* Top bar skeleton */}
+        <div className="bg-brand-primary text-white py-2">
+          <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+            <div className="flex items-center gap-4">
+              <div className="animate-pulse bg-white/20 h-4 w-24 rounded"></div>
+              <div className="animate-pulse bg-white/20 h-4 w-32 rounded hidden sm:block"></div>
+              <div className="animate-pulse bg-white/20 h-4 w-28 rounded hidden lg:block"></div>
+            </div>
+            <div className="animate-pulse bg-white/20 h-4 w-16 rounded"></div>
+          </div>
+        </div>
+        
+        {/* Main header skeleton */}
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+            
+            {/* Desktop navigation skeleton */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <div className="animate-pulse bg-gray-200 h-4 w-12 rounded"></div>
+              <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
+              <div className="animate-pulse bg-gray-200 h-4 w-12 rounded"></div>
+              <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
+            </div>
+
+            {/* Right side buttons skeleton */}
+            <div className="flex items-center gap-4">
+              <div className="animate-pulse bg-gray-200 h-8 w-16 rounded"></div>
+              <div className="animate-pulse bg-gray-200 h-8 w-8 rounded"></div>
+              <div className="animate-pulse bg-gray-200 h-8 w-8 rounded lg:hidden"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+    )
+  }
   return (
     <header className="bg-white shadow-lg border-b sticky top-0 z-50">
       {/* Top bar with new brand colors */}
@@ -16,15 +59,18 @@ export function Header() {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 hover:text-brand-accent transition-colors">
               <Phone className="h-4 w-4" />
-              <span>+91 98765 43210</span>
+              <span className="hidden sm:inline">+91 98765 43210</span>
             </div>
             <div className="flex items-center gap-2 hover:text-brand-accent transition-colors">
               <Mail className="h-4 w-4" />
-              <span>info@shreyashagro.com</span>
+              <span className="hidden sm:inline">info@shreyashagro.com</span>
             </div>
             <div className="hidden lg:flex items-center gap-2 hover:text-brand-accent transition-colors">
               <MapPin className="h-4 w-4" />
               <span>Maharashtra, India</span>
+            </div>
+            <div className="md:hidden">
+              <LanguageSwitcher />
             </div>
           </div>
           <div className="hidden md:flex items-center gap-4">
@@ -36,6 +82,7 @@ export function Header() {
               <Leaf className="h-4 w-4 text-brand-accent" />
               <span>100% Organic Certified</span>
             </div>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -58,28 +105,28 @@ export function Header() {
               href="/"
               className="text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 relative group"
             >
-              Home
+              {t('header.home')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link
               href="/products"
               className="text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 relative group"
             >
-              Products
+              {t('header.products')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link
               href="/about"
               className="text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 relative group"
             >
-              About
+              {t('header.about')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link
               href="/contact"
               className="text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 relative group"
             >
-              Contact
+              {t('header.contact')}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent group-hover:w-full transition-all duration-300"></span>
             </Link>
           </nav>
@@ -124,28 +171,28 @@ export function Header() {
               className="block text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 py-2 border-b border-gray-100"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Home
+              {t('header.home')}
             </Link>
             <Link
               href="/products"
               className="block text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 py-2 border-b border-gray-100"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Products
+              {t('header.products')}
             </Link>
             <Link
               href="/about"
               className="block text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 py-2 border-b border-gray-100"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              About
+              {t('header.about')}
             </Link>
             <Link
               href="/contact"
               className="block text-brand-neutral hover:text-brand-primary font-medium transition-colors duration-300 py-2 border-b border-gray-100"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Contact
+              {t('header.contact')}
             </Link>
             <div className="pt-4 space-y-2">
               <Button className="w-full bg-brand-accent hover:bg-brand-primary text-white">

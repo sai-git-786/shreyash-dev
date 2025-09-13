@@ -20,33 +20,8 @@ import {
 import { useState } from "react"
 import Link from "next/link"
 import { GoogleMap } from "@/components/google-map"
+import { useTranslation } from "@/contexts/translation-context"
 
-const contactInfo = [
-  {
-    icon: Phone,
-    title: "Phone",
-    details: ["+91 98765 43210", "+91 98765 43211"],
-    description: "Call us for immediate assistance"
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    details: ["info@shreyashagro.com", "support@shreyashagro.com"],
-    description: "Send us an email anytime"
-  },
-  {
-    icon: MapPin,
-    title: "Office",
-    details: ["123 Agro Street, Maharashtra", "India - 400001"],
-    description: "Visit our headquarters"
-  },
-  {
-    icon: Clock,
-    title: "Business Hours",
-    details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 2:00 PM"],
-    description: "We're here to help you"
-  }
-]
 
 const offices = [
   {
@@ -73,6 +48,7 @@ const offices = [
 ]
 
 export default function ContactPage() {
+  const { t, isLoading } = useTranslation()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -80,6 +56,88 @@ export default function ContactPage() {
     subject: "",
     message: ""
   })
+
+  // Safety check to prevent rendering before translations are ready
+  if (isLoading) {
+    return (
+      <main className="min-h-screen">
+        {/* Header skeleton */}
+        <header className="bg-white shadow-lg border-b sticky top-0 z-50">
+          <div className="bg-brand-primary text-white py-2">
+            <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+              <div className="flex items-center gap-4">
+                <div className="animate-pulse bg-white/20 h-4 w-24 rounded"></div>
+                <div className="animate-pulse bg-white/20 h-4 w-32 rounded hidden sm:block"></div>
+              </div>
+              <div className="animate-pulse bg-white/20 h-4 w-16 rounded"></div>
+            </div>
+          </div>
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-20">
+              <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+              <div className="flex items-center gap-4">
+                <div className="animate-pulse bg-gray-200 h-8 w-8 rounded"></div>
+                <div className="animate-pulse bg-gray-200 h-8 w-8 rounded lg:hidden"></div>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        {/* Hero section skeleton */}
+        <section className="bg-gradient-to-r from-brand-primary to-brand-accent text-white py-20">
+          <div className="container mx-auto px-4 text-center">
+            <div className="animate-pulse bg-white/20 h-12 w-96 mx-auto mb-6 rounded lg:h-16"></div>
+            <div className="animate-pulse bg-white/20 h-6 w-full max-w-3xl mx-auto rounded"></div>
+          </div>
+        </section>
+
+        {/* Content skeleton */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="text-center border shadow-lg rounded-lg p-6">
+                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full mx-auto mb-4"></div>
+                  <div className="animate-pulse bg-gray-200 h-6 w-24 mx-auto mb-3 rounded"></div>
+                  <div className="space-y-2">
+                    <div className="animate-pulse bg-gray-200 h-4 w-full rounded"></div>
+                    <div className="animate-pulse bg-gray-200 h-4 w-3/4 mx-auto rounded"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: t('contact.phone'),
+      details: ["+91 98765 43210", "+91 98765 43211"],
+      description: t('contact.callUs')
+    },
+    {
+      icon: Mail,
+      title: t('contact.email'),
+      details: ["info@shreyashagro.com", "support@shreyashagro.com"],
+      description: t('contact.emailUs')
+    },
+    {
+      icon: MapPin,
+      title: t('contact.office'),
+      details: ["123 Agro Street, Maharashtra", "India - 400001"],
+      description: t('contact.visitUs')
+    },
+    {
+      icon: Clock,
+      title: t('contact.businessHours'),
+      details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 2:00 PM"],
+      description: t('contact.hereToHelp')
+    }
+  ]
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -95,10 +153,10 @@ export default function ContactPage() {
         message: ""
       })
       // You can add a success message here
-      alert("Thank you for your message! We'll get back to you soon.")
+      alert(t('contact.thankYou'))
     } catch (error) {
       console.error("Error submitting form:", error)
-      alert("There was an error submitting your message. Please try again.")
+      alert(t('contact.errorMessage'))
     }
   }
 
@@ -116,9 +174,9 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-brand-primary to-brand-accent text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">Contact Us</h1>
+          <h1 className="text-4xl lg:text-6xl font-bold mb-6">{t('contact.title')}</h1>
           <p className="text-xl lg:text-2xl max-w-3xl mx-auto">
-            Get in touch with our team for any questions, support, or partnership opportunities
+            {t('contact.subtitle')}
           </p>
         </div>
       </section>
@@ -153,17 +211,16 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
-              <h2 className="text-3xl font-bold text-brand-primary mb-6">Send us a Message</h2>
+              <h2 className="text-3xl font-bold text-brand-primary mb-6">{t('contact.sendMessage')}</h2>
               <p className="text-gray-600 mb-8">
-                Fill out the form below and we'll get back to you as soon as possible. 
-                We're here to help with all your agricultural needs.
+                {t('contact.formDescription')}
               </p>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
+                      {t('contact.fullName')} *
                     </label>
                     <Input
                       id="name"
@@ -172,13 +229,13 @@ export default function ContactPage() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Enter your full name"
+                      placeholder={t('contact.enterFullName')}
                       className="w-full"
                     />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
+                      {t('contact.emailAddress')} *
                     </label>
                     <Input
                       id="email"
@@ -187,7 +244,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Enter your email"
+                      placeholder={t('contact.enterEmail')}
                       className="w-full"
                     />
                   </div>
@@ -196,7 +253,7 @@ export default function ContactPage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
+                      {t('contact.phoneNumber')}
                     </label>
                     <Input
                       id="phone"
@@ -204,13 +261,13 @@ export default function ContactPage() {
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="Enter your phone number"
+                      placeholder={t('contact.enterPhone')}
                       className="w-full"
                     />
                   </div>
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                      Subject *
+                      {t('contact.subject')} *
                     </label>
                     <Input
                       id="subject"
@@ -219,7 +276,7 @@ export default function ContactPage() {
                       required
                       value={formData.subject}
                       onChange={handleChange}
-                      placeholder="What is this about?"
+                      placeholder={t('contact.whatAbout')}
                       className="w-full"
                     />
                   </div>
@@ -227,7 +284,7 @@ export default function ContactPage() {
                 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
+                    {t('contact.message')} *
                   </label>
                   <Textarea
                     id="message"
@@ -235,7 +292,7 @@ export default function ContactPage() {
                     required
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us more about your inquiry..."
+                    placeholder={t('contact.tellUsMore')}
                     rows={6}
                     className="w-full"
                   />
@@ -243,7 +300,7 @@ export default function ContactPage() {
                 
                 <Button type="submit" className="w-full bg-brand-accent hover:bg-brand-primary text-white py-3">
                   <Send className="h-5 w-5 mr-2" />
-                  Send Message
+                  {t('contact.sendMessageBtn')}
                 </Button>
               </form>
             </div>
@@ -251,7 +308,7 @@ export default function ContactPage() {
             {/* Map & Quick Contact */}
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold text-brand-primary mb-4">Visit Our Office</h3>
+                <h3 className="text-2xl font-bold text-brand-primary mb-4">{t('contact.visitOffice')}</h3>
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <div className="mb-4">
                     <GoogleMap 
@@ -277,15 +334,15 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-bold text-brand-primary mb-4">Quick Contact</h3>
+                <h3 className="text-2xl font-bold text-brand-primary mb-4">{t('contact.quickContact')}</h3>
                 <div className="space-y-4">
                   <Button className="w-full bg-brand-primary hover:bg-brand-accent text-white">
                     <Phone className="h-5 w-5 mr-2" />
-                    Call Now
+                    {t('contact.callNow')}
                   </Button>
                   <Button variant="outline" className="w-full border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white">
                     <MessageSquare className="h-5 w-5 mr-2" />
-                    WhatsApp
+                    {t('contact.whatsapp')}
                   </Button>
                 </div>
               </div>
@@ -298,9 +355,9 @@ export default function ContactPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">Our Office Locations</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">{t('contact.officeLocations')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We have offices across Maharashtra to serve you better. Find the location nearest to you.
+              {t('contact.officeSubtitle')}
             </p>
           </div>
           
@@ -332,7 +389,7 @@ export default function ContactPage() {
                   </div>
                   <div className="mt-4 space-y-2">
                     <Button className="w-full bg-brand-accent hover:bg-brand-primary text-white">
-                      Get Directions
+                      {t('contact.getDirections')}
                     </Button>
                     <div className="h-32 rounded-lg overflow-hidden">
                       <GoogleMap 
@@ -352,9 +409,9 @@ export default function ContactPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-primary mb-4">{t('contact.faq')}</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Find answers to common questions about our products and services
+              {t('contact.faqSubtitle')}
             </p>
           </div>
           
@@ -362,10 +419,10 @@ export default function ContactPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-brand-primary mb-3">
-                  How can I place an order?
+                  {t('contact.howToOrder')}
                 </h3>
                 <p className="text-gray-600">
-                  You can place an order by calling our sales team, visiting our office, or through our authorized dealers.
+                  {t('contact.orderAnswer')}
                 </p>
               </CardContent>
             </Card>
@@ -373,10 +430,10 @@ export default function ContactPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-brand-primary mb-3">
-                  Do you provide technical support?
+                  {t('contact.technicalSupport')}
                 </h3>
                 <p className="text-gray-600">
-                  Yes, we provide comprehensive technical support and guidance for all our products.
+                  {t('contact.supportAnswer')}
                 </p>
               </CardContent>
             </Card>
@@ -384,10 +441,10 @@ export default function ContactPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-brand-primary mb-3">
-                  What is your delivery time?
+                  {t('contact.deliveryTime')}
                 </h3>
                 <p className="text-gray-600">
-                  Delivery time varies by location. We typically deliver within 2-5 business days.
+                  {t('contact.deliveryAnswer')}
                 </p>
               </CardContent>
             </Card>
@@ -395,10 +452,10 @@ export default function ContactPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-brand-primary mb-3">
-                  Are your products organic?
+                  {t('contact.organicProducts')}
                 </h3>
                 <p className="text-gray-600">
-                  We offer both organic and conventional products. All our organic products are certified.
+                  {t('contact.organicAnswer')}
                 </p>
               </CardContent>
             </Card>

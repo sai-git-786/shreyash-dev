@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { DM_Sans } from "next/font/google"
 import "./globals.css"
+import { TranslationProvider } from "@/contexts/translation-context"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   keywords:
     "plant nutrients, agricultural pesticides, plant growth promoters, fertilizers, crop yield, farming solutions",
   authors: [{ name: "Shreyash Agro Industries" }],
+  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     title: "Shreyash Agro Industries - Plant Nutrients & Agricultural Solutions",
     description:
@@ -40,7 +42,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable} antialiased`}>
-      <body>{children}</body>
+      <body>
+        <TranslationProvider>
+          {children}
+        </TranslationProvider>
+      </body>
     </html>
   )
 }

@@ -1,10 +1,58 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { MapPin, Phone, Mail, Clock, Send, Leaf } from "lucide-react"
+import { useTranslation } from "@/contexts/translation-context"
 
 export function ContactSection() {
+  const { t, isLoading } = useTranslation()
+  
+  if (isLoading) {
+    return (
+      <section
+        id="contact"
+        className="py-20 lg:py-32 bg-gradient-to-br from-brand-light to-white relative overflow-hidden"
+      >
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-20">
+            <div className="animate-pulse bg-gray-200 h-8 w-48 mx-auto mb-4 rounded"></div>
+            <div className="animate-pulse bg-gray-200 h-6 w-full max-w-2xl mx-auto rounded"></div>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Form skeleton */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl">
+              <div className="animate-pulse bg-gray-200 h-6 w-32 mb-6 rounded"></div>
+              <div className="space-y-4">
+                <div className="animate-pulse bg-gray-200 h-12 w-full rounded"></div>
+                <div className="animate-pulse bg-gray-200 h-12 w-full rounded"></div>
+                <div className="animate-pulse bg-gray-200 h-32 w-full rounded"></div>
+                <div className="animate-pulse bg-brand-primary h-12 w-32 rounded"></div>
+              </div>
+            </div>
+            
+            {/* Contact info skeleton */}
+            <div className="space-y-8">
+              {[...Array(3)].map((_, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="animate-pulse bg-gray-200 w-12 h-12 rounded-full"></div>
+                  <div className="flex-1">
+                    <div className="animate-pulse bg-gray-200 h-5 w-24 mb-2 rounded"></div>
+                    <div className="animate-pulse bg-gray-200 h-4 w-full mb-1 rounded"></div>
+                    <div className="animate-pulse bg-gray-200 h-4 w-3/4 rounded"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+  
   return (
     <section
       id="contact"
@@ -26,14 +74,13 @@ export function ContactSection() {
             <div className="w-16 h-px bg-brand-primary"></div>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold font-sans mb-8 animate-fade-in-up">
-            <span className="text-brand-primary">Get In</span> <span className="text-brand-accent">Touch</span>
+            <span className="text-brand-primary">{t('contact.getInTouch')}</span>
           </h2>
           <p
             className="text-xl lg:text-2xl text-brand-neutral max-w-4xl mx-auto leading-relaxed font-medium animate-fade-in-up"
             style={{ animationDelay: "0.2s" }}
           >
-            Ready to enhance your agricultural productivity? Contact us today for expert advice and premium agricultural
-            solutions.
+            {t('contact.readyToEnhance')}
           </p>
         </div>
 
@@ -46,54 +93,54 @@ export function ContactSection() {
             <CardHeader className="pb-8">
               <CardTitle className="text-3xl text-brand-primary font-bold flex items-center gap-3">
                 <Send className="h-8 w-8 text-brand-accent" />
-                Send us a Message
+                {t('contact.sendMessage')}
               </CardTitle>
               <p className="text-brand-neutral mt-2">
-                We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                {t('contact.formDescription')}
               </p>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-brand-primary mb-2 block">Full Name *</label>
+                  <label className="text-sm font-semibold text-brand-primary mb-2 block">{t('contact.fullName')} *</label>
                   <Input
-                    placeholder="Your full name"
+                    placeholder={t('contact.enterFullName')}
                     className="border-2 border-brand-primary/20 focus:border-brand-accent transition-colors duration-300 rounded-xl py-3"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-brand-primary mb-2 block">Phone Number *</label>
+                  <label className="text-sm font-semibold text-brand-primary mb-2 block">{t('contact.phoneNumber')} *</label>
                   <Input
-                    placeholder="Your phone number"
+                    placeholder={t('contact.enterPhone')}
                     className="border-2 border-brand-primary/20 focus:border-brand-accent transition-colors duration-300 rounded-xl py-3"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-brand-primary mb-2 block">Email Address *</label>
+                <label className="text-sm font-semibold text-brand-primary mb-2 block">{t('contact.emailAddress')} *</label>
                 <Input
                   type="email"
-                  placeholder="your.email@example.com"
+                  placeholder={t('contact.enterEmail')}
                   className="border-2 border-brand-primary/20 focus:border-brand-accent transition-colors duration-300 rounded-xl py-3"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-brand-primary mb-2 block">Subject</label>
+                <label className="text-sm font-semibold text-brand-primary mb-2 block">{t('contact.subject')}</label>
                 <Input
-                  placeholder="How can we help you?"
+                  placeholder={t('contact.whatAbout')}
                   className="border-2 border-brand-primary/20 focus:border-brand-accent transition-colors duration-300 rounded-xl py-3"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-brand-primary mb-2 block">Message *</label>
+                <label className="text-sm font-semibold text-brand-primary mb-2 block">{t('contact.message')} *</label>
                 <Textarea
-                  placeholder="Tell us about your requirements, crop type, farm size, or any specific challenges you're facing..."
+                  placeholder={t('contact.tellUsMore')}
                   className="min-h-[140px] border-2 border-brand-primary/20 focus:border-brand-accent transition-colors duration-300 rounded-xl resize-none"
                 />
               </div>
               <Button className="w-full bg-brand-accent hover:bg-brand-primary text-white font-semibold py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover-glow">
                 <Send className="h-5 w-5 mr-2" />
-                Send Message
+                {t('contact.sendMessageBtn')}
               </Button>
             </CardContent>
           </Card>
@@ -110,7 +157,7 @@ export function ContactSection() {
                     <MapPin className="h-8 w-8 text-brand-primary" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-xl text-brand-primary mb-3">Our Location</h3>
+                    <h3 className="font-bold text-xl text-brand-primary mb-3">{t('contact.ourLocation')}</h3>
                     <p className="text-brand-neutral leading-relaxed text-lg">
                       123 Agricultural Complex,
                       <br />
@@ -133,7 +180,7 @@ export function ContactSection() {
                     <Phone className="h-8 w-8 text-brand-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-xl text-brand-primary mb-3">Call Us</h3>
+                    <h3 className="font-bold text-xl text-brand-primary mb-3">{t('contact.callUsTitle')}</h3>
                     <p className="text-brand-neutral leading-relaxed text-lg">
                       <span className="font-semibold">Sales:</span> +91 98765 43210
                       <br />
@@ -154,7 +201,7 @@ export function ContactSection() {
                     <Mail className="h-8 w-8 text-brand-primary" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-xl text-brand-primary mb-3">Email Us</h3>
+                    <h3 className="font-bold text-xl text-brand-primary mb-3">{t('contact.emailUsTitle')}</h3>
                     <p className="text-brand-neutral leading-relaxed text-lg">
                       <span className="font-semibold">General:</span> info@shreyashagro.com
                       <br />
@@ -175,7 +222,7 @@ export function ContactSection() {
                     <Clock className="h-8 w-8 text-brand-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-xl text-brand-primary mb-3">Business Hours</h3>
+                    <h3 className="font-bold text-xl text-brand-primary mb-3">{t('contact.businessHoursTitle')}</h3>
                     <p className="text-brand-neutral leading-relaxed text-lg">
                       <span className="font-semibold">Mon - Sat:</span> 9:00 AM - 6:00 PM
                       <br />
@@ -192,23 +239,23 @@ export function ContactSection() {
         <div className="mt-20 text-center">
           <Card className="border-0 shadow-2xl bg-gradient-to-r from-brand-primary to-brand-accent text-white animate-fade-in-up">
             <CardContent className="p-12">
-              <h3 className="text-3xl font-bold mb-4">Ready to Transform Your Farm?</h3>
+              <h3 className="text-3xl font-bold mb-4">{t('contact.readyToTransform')}</h3>
               <p className="text-xl mb-8 opacity-90">
-                Join thousands of satisfied farmers who trust Shreyash Agro Industries for their agricultural needs.
+                {t('contact.joinThousands')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   size="lg"
                   className="bg-white text-brand-primary hover:bg-brand-light font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 >
-                  Request Quote
+                  {t('contact.requestQuote')}
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="border-2 border-white text-white hover:bg-white hover:text-brand-primary font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 bg-transparent"
                 >
-                  Download Catalog
+                  {t('contact.downloadCatalog')}
                 </Button>
               </div>
             </CardContent>
